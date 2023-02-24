@@ -3,7 +3,7 @@ import { APP_NAME } from '@/lib/consts'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import { BookOpenIcon, CodeBracketIcon } from '@heroicons/react/24/outline'
 import client from '@/lib/prismadb'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import App from "./app"
 
 const Home: FC = () => {
 	const { data: session } = useSession()
@@ -12,6 +12,7 @@ const Home: FC = () => {
 			<>
 				Signed in as {session.user.email} <br />
 				<button onClick={() => signOut()}>Sign out</button>
+        <App/>
 			</>
 		)
 	}

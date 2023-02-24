@@ -1,4 +1,5 @@
 import 'tailwindcss/tailwind.css'
+import '../styles/App.css'
 import { ThemeProvider } from 'next-themes'
 import { SessionProvider } from 'next-auth/react'
 
