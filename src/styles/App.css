@@ -141,4 +141,11 @@ a:active {
     border: none;
     cursor: pointer;
 }
-
+.card>img{
+    width:100%;
+    max-width:400px;
+}
+.card-list{
+    display:flex;
+    flex-wrap:wrap;
+}
