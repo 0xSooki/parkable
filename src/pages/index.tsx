@@ -3,9 +3,24 @@ import { APP_NAME } from '@/lib/consts'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import { BookOpenIcon, CodeBracketIcon } from '@heroicons/react/24/outline'
 import client from '@/lib/prismadb'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 const Home: FC = () => {
-	return <div>haii</div>
+	const { data: session } = useSession()
+	if (session) {
+		return (
+			<>
+				Signed in as {session.user.email} <br />
+				<button onClick={() => signOut()}>Sign out</button>
+			</>
+		)
+	}
+	return (
+		<>
+			Not signed in <br />
+			<button onClick={() => signIn()}>Sign in</button>
+		</>
+	)
 }
 
 export default Home
