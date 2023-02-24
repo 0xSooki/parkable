@@ -1,15 +1,14 @@
 import 'tailwindcss/tailwind.css'
 import '../styles/App.css'
 import { ThemeProvider } from 'next-themes'
-import Head from 'next/head'
-const App = ({ Component, pageProps }) => {
+import { SessionProvider } from 'next-auth/react'
+
+export default function App({ Component, pageProps: { session, ...pageProps } }) {
 	return (
-		<ThemeProvider attribute="class">
-<Head>
-</Head>
-			<Component {...pageProps} />
-		</ThemeProvider>
+		<SessionProvider session={session}>
+			<ThemeProvider attribute="class">
+				<Component {...pageProps} />
+			</ThemeProvider>
+		</SessionProvider>
 	)
 }
-
-export default App
