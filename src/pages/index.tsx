@@ -6,6 +6,7 @@ import ParkCard from '@/components/ReservatorCard'
 
 import { getSession } from 'next-auth/react'
 import Head from 'next/head'
+import Navbar from '@/components/Navbar'
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context)
@@ -33,8 +34,10 @@ const Home: FC = () => {
 				<Head>
 					<title>Főoldal</title>
 				</Head>
-				<div className="min-h-screen flex">
-					<div className="flex w-full justify-center items-center">
+				<div className="flex h-screen flex-col">
+					<Navbar />
+
+					<div className="m-auto">
 						<ReservatorCard />
 					</div>
 				</div>

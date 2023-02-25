@@ -1,12 +1,12 @@
+import Navbar from '@/components/Navbar'
 import SpotCard from '@/components/SpotCard'
-import { useSpot } from '@/hooks/useSpot'
-import axios from 'axios'
-import { getSession, useSession } from 'next-auth/react'
-import { FC, useEffect, useState } from 'react'
+import { getSession } from 'next-auth/react'
+import { FC } from 'react'
 
 const Home: FC = () => {
 	return (
-		<div className="h-screen flex">
+		<div className="h-screen flex-col flex">
+			<Navbar />
 			<div className="m-auto">
 				<SpotCard />
 			</div>

@@ -3,12 +3,6 @@ import client from '@/lib/prismadb'
 
 const allowedMethods = ['GET', 'PUT']
 
-type resereBody = {
-	email: string
-	method: string
-	floor: number
-}
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		if (!allowedMethods.includes(req.method!) || req.method == 'OPTIONS') {

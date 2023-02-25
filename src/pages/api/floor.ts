@@ -1,13 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import client from '@/lib/prismadb'
 
-const allowedMethods = ['GET', 'PUT']
-
-type resereBody = {
-	email: string
-	method: string
-	floor: number
-}
+const allowedMethods = ['GET']
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
@@ -17,10 +11,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		switch (req.method) {
 			case 'GET': {
-				const spots = await client.spot.findMany({})
-				return res.status(200).json(spots)
+				const floors = await client.spot.findMany({
+					where: {
+						userId: null,
+					},
+					select: {
+						floor: true,
+					},
+					distinct: ['floor'],
+				})
+				console.log(floors)
+				const uniqueFloors = floors.map(floor => floor.floor)
+				return res.status(200).json(uniqueFloors)
 			}
 		}
+		return res.status(200)
 	} catch (error) {
 		console.error(error)
 		res.status(500).send({ message: 'Server error!' })

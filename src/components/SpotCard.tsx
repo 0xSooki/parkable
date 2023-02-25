@@ -31,7 +31,7 @@ const SpotCard: FC = () => {
 	if (data) {
 		return (
 			<div className="card m-4 w-72 card-side bg-base-100 shadow-xl">
-				<div className="card-body justify-center flex bg-blue-200 rounded-lg">
+				<div className="card-body justify-center flex bg-card-bg text-blue-900 rounded-lg">
 					<h2 className="card-title">Lefoglalt parkolód</h2>
 					<p className="">Emelet: {data.floor}</p>
 					<p>Parkolószám: {data.number}</p>
@@ -41,7 +41,7 @@ const SpotCard: FC = () => {
 								unreserve()
 								router.reload()
 							}}
-							className="btn btn-primary"
+							className="btn bg-blue-900 text-blue-200 hover:bg-blue-600 btn-primary"
 						>
 							Felszabadit
 						</button>
@@ -52,7 +52,7 @@ const SpotCard: FC = () => {
 	}
 	return (
 		<div className="card m-4 w-full card-side bg-base-100 shadow-xl">
-			<div className="card-body justify-center items-center flex bg-blue-200 rounded-lg">
+			<div className="card-body justify-center items-center flex bg-card-bg text-blue-900 rounded-lg">
 				<h2 className="card-title">Nincs parkolód foglalva</h2>
 			</div>
 		</div>
