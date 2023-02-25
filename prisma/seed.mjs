@@ -43,8 +43,8 @@ async function main() {
 	for (let i = 0; i < 10; i++) {
 		await prisma.spot.create({
 			data: {
-				floor: i,
-				number: i,
+				floor: randomInt(1, 4),
+				number: randomInt(1, 100),
 			},
 		})
 	}

@@ -3,6 +3,12 @@ import client from '@/lib/prismadb'
 
 const allowedMethods = ['GET', 'PUT']
 
+type resereBody = {
+	email: string
+	method: string
+	floor: number
+}
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		if (!allowedMethods.includes(req.method!) || req.method == 'OPTIONS') {
@@ -17,34 +23,47 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					where: { email: email as string },
 				})
 
-				const spot = await client.spot.findMany({
+				const spot = await client.spot.findFirst({
 					where: { userId: user.id },
 				})
-
-				return res.status(200).json({ spot, user })
+				console.log(spot)
+				return res.status(200).json(spot)
 			}
 			case 'PUT': {
-				const { id, email, method } = req.body
-				console.log(id, email, method)
-				switch (method) {
-					case 'reserve': {
-						await client.user.update({
-							where: { email: email },
-							data: {
-								spot: {
-									connect: { id: id },
-								},
-							},
+				const { email, method, floor } = req.body
+
+				if (method == 'reserve') {
+					const user = await prisma.user.findUnique({
+						where: { email: email },
+						include: { spot: true },
+					})
+
+					if (user.spot) {
+						await prisma.user.update({
+							where: { id: user.id },
+							data: { spot: { set: [] } },
 						})
 					}
-					case 'unreserve': {
-						await client.user.update({
-							where: { email: email },
-							data: {
-								spot: {
-									delete: { id: id },
-								},
-							},
+
+					const spot = await prisma.spot.findFirst({
+						where: { floor: floor, userId: null },
+					})
+
+					await prisma.spot.update({
+						where: { id: spot.id },
+						data: { user: { connect: { id: user.id } } },
+					})
+				}
+				if (method === 'unreserve') {
+					const user = await prisma.user.findUnique({
+						where: { email: email },
+						include: { spot: true },
+					})
+
+					if (user.spot) {
+						await prisma.user.update({
+							where: { id: user.id },
+							data: { spot: { set: [] } },
 						})
 					}
 				}

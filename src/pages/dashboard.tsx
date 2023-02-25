@@ -1,21 +1,37 @@
+import SpotCard from '@/components/SpotCard'
+import { useSpot } from '@/hooks/useSpot'
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import { FC, useEffect } from 'react'
-import App from './app_dashboard'
+import { getSession, useSession } from 'next-auth/react'
+import { FC, useEffect, useState } from 'react'
 
 const Home: FC = () => {
 	const { data: session } = useSession()
+	const { data, setData } = useSpot()
 
-	const getSpot = async () => {
-		const email = session?.user.email
-		const res = await axios.get('/api/spot', { params: { email: email } })
-		const data = res.data
-		console.log(res)
+	return (
+		<div className="h-screen flex">
+			<div className="m-auto">
+				<SpotCard />
+			</div>
+		</div>
+	)
+}
+
+export async function getServerSideProps(context) {
+	const session = await getSession(context)
+
+	if (!session) {
+		return {
+			redirect: {
+				destination: '/api/auth/signin',
+				permanent: false,
+			},
+		}
 	}
-	useEffect(() => {
-		getSpot()
-	}, [])
-	return <div></div>
+
+	return {
+		props: { session },
+	}
 }
 
 export default Home
