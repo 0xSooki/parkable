@@ -1,7 +1,16 @@
+import React from "react";
+import Box from "../components/Box"
+import boxes from "../components/Parkingdata"
 export default function Parking(){
-    return <div>
-        <h1>
-            Available spot
-        </h1>
+    const [squares,setSquares]=React.useState(boxes);
+    const squareElements=squares.map(square=>(
+        <Box 
+            key={square.id}
+            id={square.id}
+            on={square.on}
+        />
+    ))
+    return <div className="grid-container">
+        {squareElements}
     </div>
 }
