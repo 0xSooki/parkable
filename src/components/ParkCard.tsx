@@ -1,37 +1,45 @@
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
-import React, { useState } from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
+import React, { FC } from 'react'
 
-const ParkCard = () => {
-	const [floor, setFloor] = useState(1)
+interface Props {
+	id: string
+	floor: number
+	number: number
+}
+
+const ParkCard: FC<Props> = ({ floor, number, id }) => {
 	const { data: session } = useSession()
 
-	const getSpot = async () => {
-		await axios.put('/api/spot', { floor: floor, email: session.user.email, method: 'reserve' })
+	const reserve = async () => {
+		await axios.put(`/api/spot`, { id, email: session.user.email, method: 'reserve' })
 	}
-
 	return (
-		<div className="card w-96 bg-primary text-primary-content">
-			<div className="card-body">
-				<h2 className="card-title text-blue-900">Válassz emeletet</h2>
-
-				<select
-					onChange={e => {
-						setFloor(Number(e.target.value))
-					}}
-					className="select text-blue-300 my-4 select-bordered w-full max-w-xs"
-				>
-					<option value={1}>1. emelet</option>
-					<option value={2}>2. emelet</option>
-					<option value={3}>3. emelet</option>
-				</select>
-				<div className="card-actions justify-end">
-					<button onClick={getSpot} className="btn">
-						Get spot now
-					</button>
+		<>
+			{' '}
+			<Head>
+				<title>Parkolók</title>
+			</Head>
+			<div className="card w-64 bg-base-100 shadow-xl">
+				<div className="card-body justify-center flex bg-blue-100 rounded-lg">
+					<h2 className="card-title">Floor {floor}</h2>
+					<p>Number: {number}</p>
+					<p>{id}</p>
+					<div className="card-actions justify-center">
+						<button
+							onClick={() => {
+								reserve()
+							}}
+							className="btn btn-primary"
+						>
+							Lefoglal
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 

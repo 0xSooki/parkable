@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import axios from 'axios'
-import SpotCard from '@/components/SpotCard'
-import ParkCard from '@/components/ParkCard'
+import ReservatorCard from '@/components/ReservatorCard'
+import ParkCard from '@/components/ReservatorCard'
 
 import { getSession } from 'next-auth/react'
+import Head from 'next/head'
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context)
@@ -28,11 +29,16 @@ const Home: FC = () => {
 
 	if (session) {
 		return (
-			<div className="min-h-screen flex">
-				<div className="flex w-full justify-center items-center">
-					<ParkCard />
+			<>
+				<Head>
+					<title>Főoldal</title>
+				</Head>
+				<div className="min-h-screen flex">
+					<div className="flex w-full justify-center items-center">
+						<ReservatorCard />
+					</div>
 				</div>
-			</div>
+			</>
 		)
 	}
 	return <div></div>
