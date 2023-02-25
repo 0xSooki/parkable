@@ -1,6 +1,7 @@
 up:
 	docker-compose up -d
-	yarn dev
+	yarn dev &
+	sudo caddy reverse-proxy --from :80 --to :3000
 
 down:
 	docker-compose down
