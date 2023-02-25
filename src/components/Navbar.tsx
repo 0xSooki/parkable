@@ -22,50 +22,50 @@ const Navbar = () => {
 					<ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
 						<li>
 							<Link href={'/spots'}>
-								<a>Spots</a>
+								<a>Parkolók</a>
 							</Link>
 						</li>
 						<li>
 							<Link href={'/dashboard'}>
-								<a>Dashboard</a>
+								<a>Vezérlőpult</a>
 							</Link>
 						</li>
 					</ul>
 				</div>
 				<Link href="/">
-					<a className="btn btn-ghost normal-case text-xl">Parkable</a>
+					<a className="btn btn-ghost hover:bg-transparent normal-case font-bold text-3xl">Parkable</a>
 				</Link>
 			</div>
 			<div className="navbar-end">
 				<div className="hidden lg:flex">
-					<ul className="menu menu-horizontal px-1">
+					<ul className="flex gap-4 justify-center items-center px-1">
 						<li>
 							<Link href={'/spots'}>
-								<a>Spots</a>
+								<a className="btn btn-ghost btn-sm">Parkolók</a>
 							</Link>
 						</li>
 						<li>
 							<Link href={'/dashboard'}>
-								<a>Dashboard</a>
+								<a className="btn btn-ghost btn-sm">Vezérlőpult</a>
 							</Link>
+						</li>
+						<li>
+							{session ? (
+								<>
+									<button className="btn btn-sm" onClick={() => signOut()}>
+										Kilépés
+									</button>
+								</>
+							) : (
+								<>
+									<button className="btn btn-sm" onClick={() => signIn()}>
+										Belépés
+									</button>
+								</>
+							)}
 						</li>
 					</ul>
 				</div>
-				{session ? (
-					<>
-						<div>
-							<button className="btn" onClick={() => signOut()}>
-								Sign out
-							</button>
-						</div>
-					</>
-				) : (
-					<>
-						<button className="btn" onClick={() => signIn()}>
-							Sign in
-						</button>
-					</>
-				)}
 			</div>
 		</div>
 	)
