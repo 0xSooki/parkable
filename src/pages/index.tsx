@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import axios from 'axios'
+import Navbar from '@/components/Navbar'
 
 const Home: FC = () => {
 	const [spots, setSpots] = useState([])
@@ -23,17 +24,15 @@ const Home: FC = () => {
 		return (
 			<>
 				<div>
-					<div>
-						Signed in as {session.user.email} <br />
-						<button onClick={() => signOut()}>Sign out</button>
-					</div>
-					<div>
-						{spots.map(spot => (
-							<div className="" key={spot.id} onClick={() => reserve(spot.id)}>
-								<h3>{spot.id}</h3>
-							</div>
-						))}
-					</div>
+					Signed in as {session.user.email} <br />
+					<button onClick={() => signOut()}>Sign out</button>
+				</div>
+				<div>
+					{spots.map(spot => (
+						<div className="" key={spot.id} onClick={() => reserve(spot.id)}>
+							<h3>{spot.id}</h3>
+						</div>
+					))}
 				</div>
 			</>
 		)
