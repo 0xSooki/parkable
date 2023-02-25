@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import axios from 'axios'
-import Navbar from '@/components/Navbar'
+import SpotCard from '@/components/SpotCard'
 
 const Home: FC = () => {
 	const [spots, setSpots] = useState([])
@@ -10,6 +10,7 @@ const Home: FC = () => {
 	const getSpots = async () => {
 		const res = await fetch('/api/spots')
 		const data = await res.json()
+		console.log(data)
 		setSpots(data.data)
 	}
 
@@ -20,28 +21,13 @@ const Home: FC = () => {
 	useEffect(() => {
 		getSpots()
 	}, [])
-	if (session) {
-		return (
-			<>
-				<div>
-					Signed in as {session.user.email} <br />
-					<button onClick={() => signOut()}>Sign out</button>
-				</div>
-				<div>
-					{spots.map(spot => (
-						<div className="" key={spot.id} onClick={() => reserve(spot.id)}>
-							<h3>{spot.id}</h3>
-						</div>
-					))}
-				</div>
-			</>
-		)
-	}
+
 	return (
-		<>
-			Not signed in <br />
-			<button onClick={() => signIn()}>Sign in</button>
-		</>
+		<div className="flex justify-center flex-wrap">
+			{spots.map((spot: any) => (
+				<SpotCard key={spot.id} id={spot.id} floor={spot.floor} number={spot.number} />
+			))}
+		</div>
 	)
 }
 

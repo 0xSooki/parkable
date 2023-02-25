@@ -52,6 +52,9 @@ model Spot {
   user      User?    @relation(fields: [userId], references: [id], onUpdate: Cascade)
   userId    String?
   isTaken   Boolean  @default(false)
+  floor     Int
+  number    Int
+  ownerId   String?
 }
 
 model VerificationToken {

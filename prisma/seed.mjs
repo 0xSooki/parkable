@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { randomInt } from 'crypto'
 const prisma = new PrismaClient()
 
 async function main() {
@@ -8,11 +9,28 @@ async function main() {
 		create: {
 			email: 'alice@prisma.io',
 			name: 'Alice',
+		},
+	})
+
+	const spot = await prisma.spot.create({
+		data: {
+			floor: 1,
+			number: 1,
+			ownerId: alice.id,
+		},
+	})
+
+	await prisma.user.update({
+		where: { id: alice.id },
+		data: {
 			spot: {
-				create: {},
+				connect: {
+					id: spot.id,
+				},
 			},
 		},
 	})
+
 	const bob = await prisma.user.upsert({
 		where: { email: 'bob@prisma.io' },
 		update: {},
@@ -21,13 +39,13 @@ async function main() {
 			name: 'Bob',
 		},
 	})
+
 	for (let i = 0; i < 10; i++) {
-		await prisma.spot.upsert({
-			where: {
-				id: toString(i),
+		await prisma.spot.create({
+			data: {
+				floor: i,
+				number: i,
 			},
-			update: {},
-			create: {},
 		})
 	}
 	console.log({ alice, bob })

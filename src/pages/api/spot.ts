@@ -11,23 +11,43 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		switch (req.method) {
 			case 'GET': {
-				const { email } = req.body
-				const spots = await client.spot.findFirst({
-					where: { user: { email: email } },
+				const { email } = req.query
+
+				const user = await client.user.findFirst({
+					where: { email: email as string },
 				})
 
-				return res.status(200).json({ data: spots })
+				const spot = await client.spot.findMany({
+					where: { userId: user.id },
+				})
+
+				return res.status(200).json({ spot, user })
 			}
 			case 'PUT': {
-				const { id, email } = req.body
-				await client.user.update({
-					where: { email: email },
-					data: {
-						spot: {
-							connect: { id: id },
-						},
-					},
-				})
+				const { id, email, method } = req.body
+				console.log(id, email, method)
+				switch (method) {
+					case 'reserve': {
+						await client.user.update({
+							where: { email: email },
+							data: {
+								spot: {
+									connect: { id: id },
+								},
+							},
+						})
+					}
+					case 'unreserve': {
+						await client.user.update({
+							where: { email: email },
+							data: {
+								spot: {
+									delete: { id: id },
+								},
+							},
+						})
+					}
+				}
 
 				return res.status(200)
 			}
