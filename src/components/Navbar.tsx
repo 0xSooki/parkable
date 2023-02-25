@@ -1,28 +1,74 @@
-export default function Navbar() {
-    return (
-      <nav className="navbar navbar-default navbar-fixed-top transparent">
-          <h1 className="navbar-brand">Parkable</h1>
+import { signIn, signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 
-        <div className="container-fluid">
-            <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <a className="navbar-brand" href="#top" title="home"><i className="fa fa-code fa-lg"></i></a>
-          </div>
-  
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul className="nav navbar-nav navbar-right">
-              <li><a href="#about">Dashboash</a></li>
-              <li><a href="#skills">Services</a></li>
-              <li><a href="#skills">Log in</a></li>
+const Navbar = () => {
+	const { data: session } = useSession()
 
-            </ul>
-          </div>
-        </div>
-      </nav>
-    )
+	return (
+		<div className="navbar bg-base-100">
+			<div className="navbar-start">
+				<div className="dropdown">
+					<label tabIndex={0} className="btn btn-ghost lg:hidden">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-5 w-5"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+						</svg>
+					</label>
+					<ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+						<li>
+							<Link href={'/spots'}>
+								<a>Spots</a>
+							</Link>
+						</li>
+						<li>
+							<Link href={'/dashboard'}>
+								<a>Dashboard</a>
+							</Link>
+						</li>
+					</ul>
+				</div>
+				<Link href="/">
+					<a className="btn btn-ghost normal-case text-xl">Parkable</a>
+				</Link>
+			</div>
+			<div className="navbar-end">
+				<div className="hidden lg:flex">
+					<ul className="menu menu-horizontal px-1">
+						<li>
+							<Link href={'/spots'}>
+								<a>Spots</a>
+							</Link>
+						</li>
+						<li>
+							<Link href={'/dashboard'}>
+								<a>Dashboard</a>
+							</Link>
+						</li>
+					</ul>
+				</div>
+				{session ? (
+					<>
+						<div>
+							<button className="btn" onClick={() => signOut()}>
+								Sign out
+							</button>
+						</div>
+					</>
+				) : (
+					<>
+						<button className="btn" onClick={() => signIn()}>
+							Sign in
+						</button>
+					</>
+				)}
+			</div>
+		</div>
+	)
 }
+
+export default Navbar

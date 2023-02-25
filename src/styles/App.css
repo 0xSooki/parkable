@@ -8,13 +8,14 @@
 html{
     font-size:100%;
 }
+
 body { 
-  padding-top: 70px; 
   padding-bottom: 0px; 
   font-family: "Karla", sans-serif;
   margin: 0;  
   color: #856964; /* hot chocolate */
 }
+
 #title{
   color:green;
 }
@@ -62,40 +63,6 @@ a:active {
   padding: 1.75em 2em;  
 } 
 
-.navbar {
-  background-color: white;
-  color: #d83b4c !important; /* grapefruit */
-  margin-bottom: 0;
-  padding: 10px;
-  border-bottom: none;
-  font-family: 'Karla', sans-serif; 
-  font-size: 1.3em;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-} 
-
-.navbar-brand {
-  padding-top: 12px;
-  padding-left: 10px;
-  color: #d83b4c !important; /* grapefruit */
-} 
-
-.navbar li a {
-  color: #d83b4c !important; /* grapefruit */
-}
-
-.navbar li a:hover {
-  text-decoration: underline !important; 
-}
-
-.navbar-default .navbar-toggle {
-    border-radius: 0;
-    box-shadow: none;
-}
-
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #d83b4c; /* grapefruit */
-}
 .main{
   padding:20px 36px;
   margin: 10px 10px 10px 10px;

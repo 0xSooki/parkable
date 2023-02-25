@@ -20,6 +20,6 @@
 			"@images/*": ["public/images/*"]
 		}
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "prisma/seed.mjs"],
 	"exclude": ["node_modules"]
 }
