@@ -1,11 +1,13 @@
 import { useSpot } from '@/hooks/useSpot'
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const SpotCard: FC = () => {
 	const { data: session } = useSession()
 	const { data, setData } = useSpot()
+	const router = useRouter()
 
 	const getSpot = async () => {
 		const res = await axios.get('/api/spot', { params: { email: session.user.email } })
@@ -18,37 +20,40 @@ const SpotCard: FC = () => {
 		setData(null)
 	}
 
-	useEffect(() => {
-		getSpot()
-	}, [])
-	const unreserve = async e => {
+	const unreserve = async () => {
 		await axios.put(`/api/spot`, { id: data.id, email: session.user.email, method: 'unreserve' })
 		setData(null)
 	}
-	console.log(data)
 
+	useEffect(() => {
+		getSpot()
+	}, [])
+	if (data) {
+		return (
+			<div className="card m-4 w-72 card-side bg-base-100 shadow-xl">
+				<div className="card-body justify-center flex bg-blue-200 rounded-lg">
+					<h2 className="card-title">Lefoglalt parkolód</h2>
+					<p className="">Emelet: {data.floor}</p>
+					<p>Parkolószám: {data.number}</p>
+					<div className="card-actions justify-center">
+						<button
+							onClick={() => {
+								unreserve()
+								router.reload()
+							}}
+							className="btn btn-primary"
+						>
+							Felszabadit
+						</button>
+					</div>
+				</div>
+			</div>
+		)
+	}
 	return (
-		<div className="card m-4 w-48 card-side bg-base-100 shadow-xl">
-			<div className="card-body justify-center flex bg-blue-200 rounded-lg">
-				{data ? (
-					<>
-						<h2 className="card-title">Floor {data.floor}</h2>
-						<p>Number: {data.number}</p>
-						<p>{data.id}</p>
-						<div className="card-actions justify-center">
-							<button
-								onClick={e => {
-									unreserve(e)
-								}}
-								className="btn btn-primary"
-							>
-								Felszabadit
-							</button>
-						</div>
-					</>
-				) : (
-					<div>Not</div>
-				)}
+		<div className="card m-4 w-full card-side bg-base-100 shadow-xl">
+			<div className="card-body justify-center items-center flex bg-blue-200 rounded-lg">
+				<h2 className="card-title">Nincs parkolód foglalva</h2>
 			</div>
 		</div>
 	)

@@ -30,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				return res.status(200).json(spot)
 			}
 			case 'PUT': {
-				const { email, method, floor } = req.body
+				const { email, method, floor, id } = req.body
 
 				if (method == 'reserve') {
 					const user = await prisma.user.findUnique({
@@ -44,10 +44,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							data: { spot: { set: [] } },
 						})
 					}
-
-					const spot = await prisma.spot.findFirst({
-						where: { floor: floor, userId: null },
-					})
+					let spot
+					if (id) {
+						spot = await prisma.spot.findFirst({
+							where: { id: id, userId: null },
+						})
+					} else {
+						spot = await prisma.spot.findFirst({
+							where: { floor: floor, userId: null },
+						})
+					}
 
 					await prisma.spot.update({
 						where: { id: spot.id },
@@ -67,7 +73,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						})
 					}
 				}
-
 				return res.status(200)
 			}
 		}

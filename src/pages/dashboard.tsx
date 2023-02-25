@@ -5,9 +5,6 @@ import { getSession, useSession } from 'next-auth/react'
 import { FC, useEffect, useState } from 'react'
 
 const Home: FC = () => {
-	const { data: session } = useSession()
-	const { data, setData } = useSpot()
-
 	return (
 		<div className="h-screen flex">
 			<div className="m-auto">
