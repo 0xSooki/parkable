@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import axios from 'axios'
-import SpotCard from '@/components/SpotCard'
-import ParkCard from '@/components/ParkCard'
+import { useSession } from 'next-auth/react'
+import ParkCard from '@/components/cards/ParkCard'
 import Navbar from '@/components/Navbar'
 
 const Spots: FC = () => {

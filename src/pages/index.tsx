@@ -1,8 +1,6 @@
-import { FC, useEffect, useState } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import axios from 'axios'
-import ReservatorCard from '@/components/ReservatorCard'
-import ParkCard from '@/components/ReservatorCard'
+import { FC } from 'react'
+import { useSession } from 'next-auth/react'
+import ReservatorCard from '@/components/cards/ReservatorCard'
 
 import { getSession } from 'next-auth/react'
 import Head from 'next/head'

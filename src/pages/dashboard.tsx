@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar'
-import SpotCard from '@/components/SpotCard'
+import SpotCard from '@/components/cards/SpotCard'
 import { getSession } from 'next-auth/react'
 import { FC } from 'react'
 

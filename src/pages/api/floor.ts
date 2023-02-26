@@ -20,9 +20,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					},
 					distinct: ['floor'],
 				})
-				console.log(floors)
 				const uniqueFloors = floors.map(floor => floor.floor)
-				return res.status(200).json(uniqueFloors)
+				return res.status(200).json(uniqueFloors.sort())
 			}
 		}
 		return res.status(200)

@@ -20,7 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				const spot = await client.spot.findFirst({
 					where: { userId: user.id },
 				})
-				console.log(spot)
 				return res.status(200).json(spot)
 			}
 			case 'PUT': {
