@@ -1,0 +1,3 @@
+[submodule "parkable-app"]
+	path = parkable-app
+	url = https://github.com/karak1974/parkable-app
